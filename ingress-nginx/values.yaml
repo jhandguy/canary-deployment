@@ -1,0 +1,5 @@
+replicas: 1
+image:
+  registry: ghcr.io
+  repository: jhandguy/canary-deployment/sample-app
+  tag: 1.0.0

@@ -1,0 +1,8 @@
+replicas: 1
+image:
+  registry: ghcr.io
+  repository: jhandguy/canary-deployment/sample-app
+  tag: 1.0.0
+prometheus:
+  enabled: false
+  address: http://prometheus-operated.prometheus.svc.cluster.local:9090

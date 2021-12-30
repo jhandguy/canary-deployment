@@ -1,0 +1,26 @@
+---
+{{- if .Values.prometheus.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  metrics:
+    - name: success-share
+      interval: 5m
+      initialDelay: 30s
+      successCondition: len(result) == 0 || isNaN(result[0]) || result[0] >= 0.99
+      failureLimit: 0
+      provider:
+        prometheus:
+          address: {{ .Values.prometheus.address }}
+          query: |
+            sum(rate(
+              sample_app_requests_count{service="{{ .Release.Name }}-canary", success="true"}[5m])
+            ) by (service)
+            /
+            sum(rate(
+              sample_app_requests_count{service="{{ .Release.Name }}-canary"}[5m])
+            ) by (service)
+{{- end }}

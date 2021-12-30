@@ -9,7 +9,7 @@ minikube start --addons=ingress $(if [ $(uname) != "Linux" ]; then echo "--vm=tr
 
 helm install ingress-nginx --name-template sample-app --create-namespace -n sample-app
 
-helm upgrade sample-app ingress-nginx --create-namespace -n sample-app --set canary.image.tag=latest --set canary.weight=50 --wait
+helm upgrade sample-app ingress-nginx -n sample-app --set canary.image.tag=latest --set canary.weight=50
 
 minikube stop && minikube delete
 ```

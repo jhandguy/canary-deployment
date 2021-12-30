@@ -1,5 +1,5 @@
 apiVersion: v2
 appVersion: 1.0.0
-name: canary-deployment
-description: Helm chart showcasing canary deployment
+name: sample-app
+description: Helm chart showcasing canary deployment using ingress-nginx
 version: 1.0.0

@@ -1,6 +1,6 @@
-# canary-deployment
+# Canary Deployment
 
-A sample project showcasing different Canary Deployment solutions using ingress-nginx and argo-rollouts.
+A sample project showcasing various Canary Deployment solutions.
 
 ## Using ingress-nginx
 

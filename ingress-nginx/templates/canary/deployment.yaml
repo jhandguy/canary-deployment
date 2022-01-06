@@ -33,6 +33,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: KUBERNETES_DEPLOYMENT
+              value: "canary"
           ports:
             - name: http
               protocol: TCP

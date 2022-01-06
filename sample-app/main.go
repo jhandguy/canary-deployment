@@ -27,9 +27,10 @@ func init() {
 }
 
 type response struct {
-	Node      string `json:"node"`
-	Namespace string `json:"namespace"`
-	Pod       string `json:"pod"`
+	Node       string `json:"node"`
+	Namespace  string `json:"namespace"`
+	Pod        string `json:"pod"`
+	Deployment string `json:"deployment"`
 }
 
 func handleSuccess(response response) func(http.ResponseWriter, *http.Request) {
@@ -56,10 +57,12 @@ func main() {
 	node, _ := os.LookupEnv("KUBERNETES_NODE")
 	namespace, _ := os.LookupEnv("KUBERNETES_NAMESPACE")
 	pod, _ := os.LookupEnv("KUBERNETES_POD")
+	deployment, _ := os.LookupEnv("KUBERNETES_DEPLOYMENT")
 	resp := response{
-		Node:      node,
-		Namespace: namespace,
-		Pod:       pod,
+		Node:       node,
+		Namespace:  namespace,
+		Pod:        pod,
+		Deployment: deployment,
 	}
 
 	if prometheusEnabled {

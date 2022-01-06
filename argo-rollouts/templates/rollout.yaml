@@ -12,6 +12,12 @@ spec:
     canary:
       canaryService: {{ .Release.Name }}-canary
       stableService: {{ .Release.Name }}
+      canaryMetadata:
+        labels:
+          deployment: canary
+      stableMetadata:
+        labels:
+          deployment: stable
       trafficRouting:
         nginx:
           stableIngress: {{ .Release.Name }}
@@ -59,6 +65,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: KUBERNETES_DEPLOYMENT
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['deployment']
           ports:
             - name: http
               protocol: TCP

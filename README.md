@@ -4,7 +4,7 @@ A sample project showcasing various Canary Deployment solutions.
 
 ## Using ingress-nginx
 
-```
+```shell
 minikube start --addons=ingress $(if [ $(uname) != "Linux" ]; then echo "--vm=true"; fi)
 
 helm install ingress-nginx --name-template sample-app --create-namespace -n sample-app
@@ -16,7 +16,7 @@ minikube stop && minikube delete
 
 ## Using argo-rollouts
 
-```
+```shell
 minikube start --kubernetes-version=1.21.8 --addons=ingress $(if [ $(uname) != "Linux" ]; then echo "--vm=true"; fi)
 
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -33,7 +33,7 @@ minikube stop && minikube delete
 
 ## Using argo-rollouts + prometheus
 
-```
+```shell
 minikube start --kubernetes-version=1.21.8 --addons=ingress $(if [ $(uname) != "Linux" ]; then echo "--vm=true"; fi)
 
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -51,25 +51,31 @@ kubectl argo rollouts promote sample-app -n sample-app
 minikube stop && minikube delete
 ```
 
-## Testing
+## Smoke Testing
 
 ### Weighted canary
 
-```
+```shell
 curl $(minikube ip)/success -H "Host: sample.app" -v
 curl $(minikube ip)/error -H "Host: sample.app" -v
 ```
 
 ### Always canary
 
-```
+```shell
 curl $(minikube ip)/success -H "Host: sample.app" -H "X-Canary: always" -v
 curl $(minikube ip)/error -H "Host: sample.app" -H "X-Canary: always" -v
 ```
 
 ### Never canary
 
-```
+```shell
 curl $(minikube ip)/success -H "Host: sample.app" -H "X-Canary: never" -v
 curl $(minikube ip)/error -H "Host: sample.app" -H "X-Canary: never" -v
+```
+
+## Load Testing
+
+```shell
+env URL=$(minikube ip) k6 run k6/script.js
 ```

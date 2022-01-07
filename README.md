@@ -24,7 +24,7 @@ helm install argo/argo-rollouts --name-template argo-rollouts --create-namespace
 
 helm install argo-rollouts --name-template sample-app --create-namespace -n sample-app
 
-kubectl argo rollouts dashboard -n argo-rollouts
+kubectl argo rollouts dashboard -n argo-rollouts &
 kubectl argo rollouts set image sample-app sample-app=ghcr.io/jhandguy/canary-deployment/sample-app:latest -n sample-app
 kubectl argo rollouts promote sample-app -n sample-app
 
@@ -44,7 +44,7 @@ helm install prometheus-community/kube-prometheus-stack --name-template promethe
 
 helm install argo-rollouts --name-template sample-app --create-namespace -n sample-app --set prometheus.enabled=true
 
-kubectl argo rollouts dashboard -n argo-rollouts
+kubectl argo rollouts dashboard -n argo-rollouts &
 kubectl argo rollouts set image sample-app sample-app=ghcr.io/jhandguy/canary-deployment/sample-app:latest -n sample-app
 kubectl argo rollouts promote sample-app -n sample-app
 

@@ -23,12 +23,6 @@ spec:
           stableIngress: {{ .Release.Name }}
           additionalIngressAnnotations:
             canary-by-header: X-Canary
-      {{- if .Values.prometheus.enabled }}
-      analysis:
-        templates:
-          - templateName: {{ .Release.Name }}
-        startingStep: 2
-      {{- end }}
       steps:
         - setWeight: 25
         - pause: {}
@@ -38,6 +32,12 @@ spec:
         - setWeight: 75
         - pause:
             duration: 5m
+      {{- if .Values.prometheus.enabled }}
+      analysis:
+        templates:
+          - templateName: {{ .Release.Name }}
+        startingStep: 2
+      {{- end }}
   selector:
     matchLabels: *labels
   template:

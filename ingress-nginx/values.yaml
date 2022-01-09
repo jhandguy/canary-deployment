@@ -6,4 +6,4 @@ image:
 canary:
   weight: 0
   image:
-    tag: 1.0.0
+    tag: latest

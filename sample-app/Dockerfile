@@ -1,4 +1,4 @@
-FROM golang:1.17
+FROM alpine:latest
 
 COPY sample-app /
 

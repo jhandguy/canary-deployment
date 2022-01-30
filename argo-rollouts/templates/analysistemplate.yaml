@@ -8,19 +8,21 @@ metadata:
 spec:
   metrics:
     - name: success-share
-      interval: 5m
-      initialDelay: 30s
-      successCondition: len(result) == 0 || isNaN(result[0]) || result[0] >= 0.99
+      interval: 1m
+      successCondition: len(result) == 0 || result[0] >= 0.99
       failureLimit: 0
       provider:
         prometheus:
           address: {{ .Values.prometheus.address }}
           query: |
             sum(rate(
-              sample_app_requests_count{service="{{ .Release.Name }}-canary", success="true"}[5m])
+              sample_app_requests_count{service="{{ .Release.Name }}-canary", success="true"}[1m])
             ) by (service)
             /
             sum(rate(
-              sample_app_requests_count{service="{{ .Release.Name }}-canary"}[5m])
+              sample_app_requests_count{service="{{ .Release.Name }}-canary"}[1m])
             ) by (service)
+            unless sum(rate(
+              sample_app_requests_count{service="{{ .Release.Name }}-canary"}[1m])
+            ) by (service) == 0
 {{- end }}

@@ -1,0 +1,9 @@
+controller:
+  hostPort:
+    enabled: true
+  publishService:
+    enabled: false
+  extraArgs:
+    publish-status-address: "localhost"
+  service:
+    type: ClusterIP

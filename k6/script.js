@@ -19,7 +19,6 @@ export const options = {
 };
 
 export default function () {
-    const url = `http://${__ENV.URL}`;
     const params = {
         headers: {
             'Host': 'sample.app',
@@ -27,10 +26,10 @@ export default function () {
         },
     };
 
-    const res = http.get(`${url}/success`, params)
+    const res = http.get(`http://localhost/success`, params)
     check(res, {
         'status code is 200': (r) => r.status === 200,
-        'node is minikube': (r) => r.json().node === 'minikube',
+        'node is kind-control-plane': (r) => r.json().node === 'kind-control-plane',
         'namespace is sample-app': (r) => r.json().namespace === 'sample-app',
         'pod is sample-app-*': (r) => r.json().pod.includes('sample-app-'),
         'deployment is stable or canary': (r) => r.json().deployment === 'stable' || r.json().deployment === 'canary',

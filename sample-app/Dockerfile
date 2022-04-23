@@ -4,4 +4,4 @@ COPY sample-app /
 
 ENTRYPOINT /sample-app
 
-EXPOSE 8080
+EXPOSE $HTTP_PORT

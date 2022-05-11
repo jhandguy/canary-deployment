@@ -1,6 +1,6 @@
 import http from 'k6/http';
 import {check, sleep} from 'k6';
-import { Rate } from 'k6/metrics';
+import {Rate} from 'k6/metrics';
 
 const reqRate = new Rate('http_req_rate');
 
@@ -26,7 +26,7 @@ export default function () {
         },
     };
 
-    const res = http.get(`http://localhost/success`, params)
+    const res = http.get(`http://localhost/success`, params);
     check(res, {
         'status code is 200': (r) => r.status === 200,
         'node is kind-control-plane': (r) => r.json().node === 'kind-control-plane',
@@ -37,14 +37,14 @@ export default function () {
 
     switch (res.json().deployment) {
         case 'stable':
-            reqRate.add(true, { deployment: 'stable' })
-            reqRate.add(false, { deployment: 'canary' })
-            break
+            reqRate.add(true, { deployment: 'stable' });
+            reqRate.add(false, { deployment: 'canary' });
+            break;
         case 'canary':
-            reqRate.add(false, { deployment: 'stable' })
-            reqRate.add(true, { deployment: 'canary' })
-            break
+            reqRate.add(false, { deployment: 'stable' });
+            reqRate.add(true, { deployment: 'canary' });
+            break;
     }
 
-    sleep(1)
+    sleep(1);
 }

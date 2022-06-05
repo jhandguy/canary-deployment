@@ -2,11 +2,11 @@
 
 A sample project showcasing various Canary Deployment solutions.
 
-## Medium Articles
+## Blog Posts
 
-- [Canary Deployment in Kubernetes (Part 1) — Simple Canary Deployment using Ingress NGINX](https://medium.com/@jhandguy/canary-deployment-in-kubernetes-part-1-simple-canary-deployment-using-ingress-nginx-f8f5da2b0f38)
-- [Canary Deployment in Kubernetes (Part 2) — Automated Canary Deployment using Argo Rollouts](https://medium.com/@jhandguy/canary-deployment-in-kubernetes-part-2-automated-canary-deployment-using-argo-rollouts-8a3550d5a434)
-- [Canary Deployment in Kubernetes (Part 3) — Smart Canary Deployment using Argo Rollouts and Prometheus](https://medium.com/@jhandguy/canary-deployment-in-kubernetes-part-3-smart-canary-deployment-using-argo-rollouts-and-47992d72222c)
+- [Canary Deployment in Kubernetes (Part 1) — Simple Canary Deployment using Ingress NGINX](https://jhandguy.github.io/posts/simple-canary-deployment/)
+- [Canary Deployment in Kubernetes (Part 2) — Automated Canary Deployment using Argo Rollouts](https://jhandguy.github.io/posts/automated-canary-deployment/)
+- [Canary Deployment in Kubernetes (Part 3) — Smart Canary Deployment using Argo Rollouts and Prometheus](https://jhandguy.github.io/posts/smart-canary-deployment/)
 
 ## Installing
 

@@ -21,8 +21,6 @@ helm install ingress-nginx/ingress-nginx --name-template ingress-nginx --create-
 helm install sample-app/helm-charts/ingress-nginx --name-template sample-app --create-namespace -n sample-app
 
 helm upgrade sample-app sample-app/helm-charts/ingress-nginx -n sample-app --reuse-values --set canary.weight=50
-
-kind delete cluster
 ```
 
 ### Using argo-rollouts
@@ -41,8 +39,6 @@ helm install sample-app/helm-charts/argo-rollouts --name-template sample-app --c
 kubectl argo rollouts dashboard -n argo-rollouts &
 kubectl argo rollouts set image sample-app sample-app=ghcr.io/jhandguy/canary-deployment/sample-app:latest -n sample-app
 kubectl argo rollouts promote sample-app -n sample-app
-
-kind delete cluster
 ```
 
 ### Using argo-rollouts + prometheus
@@ -64,8 +60,6 @@ helm install sample-app/helm-charts/argo-rollouts --name-template sample-app --c
 kubectl argo rollouts dashboard -n argo-rollouts &
 kubectl argo rollouts set image sample-app sample-app=ghcr.io/jhandguy/canary-deployment/sample-app:latest -n sample-app
 kubectl argo rollouts promote sample-app -n sample-app
-
-kind delete cluster
 ```
 
 ## Smoke Testing
@@ -95,4 +89,10 @@ curl localhost/error -H "Host: sample.app" -H "X-Canary: never" -v
 
 ```shell
 k6 run k6/script.js
+```
+
+## Uninstalling
+
+```shell
+kind delete cluster
 ```

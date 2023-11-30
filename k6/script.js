@@ -1,15 +1,22 @@
 import http from 'k6/http';
-import {check, sleep} from 'k6';
+import {check} from 'k6';
 import {Rate} from 'k6/metrics';
 
 const reqRate = new Rate('http_req_rate');
 
 export const options = {
-    stages: [
-        {target: 20, duration: '20s'},
-        {target: 20, duration: '20s'},
-        {target: 0, duration: '20s'},
-    ],
+    scenarios: {
+        load: {
+            executor: 'ramping-arrival-rate',
+            startRate: 1,
+            timeUnit: '1s',
+            preAllocatedVUs: 20,
+            stages: [
+                {target: 20, duration: '40s'},
+                {target: 0, duration: '20s'},
+            ],
+        },
+    },
     thresholds: {
         'checks': ['rate>0.9'],
         'http_req_duration': ['p(95)<1000'],
@@ -45,6 +52,4 @@ export default function () {
             reqRate.add(true, { deployment: 'canary' });
             break;
     }
-
-    sleep(1);
 }

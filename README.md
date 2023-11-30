@@ -18,9 +18,9 @@ kind create cluster --image kindest/node:v1.27.3 --config=kind/cluster.yaml
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm install ingress-nginx/ingress-nginx --name-template ingress-nginx --create-namespace -n ingress-nginx --values kind/ingress-nginx-values.yaml --version 4.8.3 --wait
 
-helm install sample-app/helm-charts/ingress-nginx --name-template sample-app --create-namespace -n sample-app
+helm install sample-app/helm-charts/ingress-nginx --name-template sample-app --create-namespace -n sample-app --wait
 
-helm upgrade sample-app sample-app/helm-charts/ingress-nginx -n sample-app --reuse-values --set canary.weight=50
+helm upgrade sample-app sample-app/helm-charts/ingress-nginx -n sample-app --reuse-values --set canary.weight=50 --wait
 ```
 
 ### Using argo-rollouts
@@ -34,7 +34,7 @@ helm install ingress-nginx/ingress-nginx --name-template ingress-nginx --create-
 helm repo add argo https://argoproj.github.io/argo-helm
 helm install argo/argo-rollouts --name-template argo-rollouts --create-namespace -n argo-rollouts --set dashboard.enabled=true --version 2.32.5 --wait
 
-helm install sample-app/helm-charts/argo-rollouts --name-template sample-app --create-namespace -n sample-app
+helm install sample-app/helm-charts/argo-rollouts --name-template sample-app --create-namespace -n sample-app --wait
 
 kubectl argo rollouts dashboard -n argo-rollouts &
 kubectl argo rollouts set image sample-app sample-app=ghcr.io/jhandguy/canary-deployment/sample-app:latest -n sample-app
@@ -55,7 +55,7 @@ helm install argo/argo-rollouts --name-template argo-rollouts --create-namespace
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm install prometheus-community/kube-prometheus-stack --name-template prometheus --create-namespace -n prometheus --version 54.2.2 --wait
 
-helm install sample-app/helm-charts/argo-rollouts --name-template sample-app --create-namespace -n sample-app --set prometheus.enabled=true
+helm install sample-app/helm-charts/argo-rollouts --name-template sample-app --create-namespace -n sample-app --set prometheus.enabled=true --wait
 
 kubectl argo rollouts dashboard -n argo-rollouts &
 kubectl argo rollouts set image sample-app sample-app=ghcr.io/jhandguy/canary-deployment/sample-app:latest -n sample-app

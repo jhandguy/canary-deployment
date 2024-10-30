@@ -11,12 +11,12 @@ spec:
     address: http://prometheus-operated.prometheus.svc.cluster.local:9090
   query: |
     sum(rate(
-      sample_app_requests_count{service="{{ "{{ service }}" }}", success="true"}[{{ "{{ interval }}" }}])
+      sample_app_requests_count{service="{{ "{{ service }}" }}-canary", success="true"}[{{ "{{ interval }}" }}])
     ) by (service)
     /
     sum(rate(
-      sample_app_requests_count{service="{{ "{{ service }}" }}"}[{{ "{{ interval }}" }}])
+      sample_app_requests_count{service="{{ "{{ service }}" }}-canary"}[{{ "{{ interval }}" }}])
     ) by (service)
     unless sum(rate(
-      sample_app_requests_count{service="{{ "{{ service }}" }}"}[{{ "{{ interval }}" }}])
+      sample_app_requests_count{service="{{ "{{ service }}" }}-canary"}[{{ "{{ interval }}" }}])
     ) by (service) == 0

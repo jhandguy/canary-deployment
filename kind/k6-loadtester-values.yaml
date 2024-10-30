@@ -1,0 +1,3 @@
+---
+securityContext:
+  readOnlyRootFilesystem: false

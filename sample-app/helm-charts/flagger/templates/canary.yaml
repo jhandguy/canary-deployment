@@ -1,0 +1,36 @@
+---
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  provider: nginx
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Release.Name }}
+  ingressRef:
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    name: {{ .Release.Name }}
+  progressDeadlineSeconds: 600
+  service:
+    port: 8080
+    targetPort: 8080
+    portDiscovery: true
+  analysis:
+    interval: 30s
+    threshold: 10
+    maxWeight: 100
+    stepWeight: 10
+    metrics:
+      - name: {{ .Release.Name }}
+        templateRef:
+          name: {{ .Release.Name }}
+          namespace: {{ .Release.Namespace }}
+        thresholdRange:
+          min: 0.99
+        interval: 1m

@@ -78,6 +78,7 @@ helm install prometheus-community/kube-prometheus-stack --name-template promethe
 
 helm repo add flagger https://flagger.app
 helm install flagger/flagger --name-template flagger --create-namespace -n flagger --values kind/flagger-values.yaml --version 1.38.0 --wait
+helm install flagger/loadtester --name-template flagger-loadtester -n flagger --version 0.33.0 --wait
 
 helm repo add flagger-k6-webhook https://grafana.github.io/flagger-k6-webhook
 helm install flagger-k6-webhook/k6-loadtester --name-template k6-loadtester -n flagger --values kind/k6-loadtester-values.yaml --version 1.3.1 --wait

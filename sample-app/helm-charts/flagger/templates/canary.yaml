@@ -40,6 +40,13 @@ spec:
           min: 0.99
         interval: 1m
     webhooks:
+      - name: smoke-test
+        type: pre-rollout
+        url: http://flagger-loadtester.flagger
+        timeout: 10s
+        metadata:
+          type: bash
+          cmd: 'curl http://sample-app-canary.sample-app.svc.cluster.local:8080/success -H "Host: sample.app" -v'
       - name: k6-load-test
         timeout: 5m
         type: rollout

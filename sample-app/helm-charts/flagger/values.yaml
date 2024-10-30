@@ -1,7 +1,23 @@
-replicas: 1
 image:
   registry: ghcr.io
   repository: jhandguy/canary-deployment/sample-app
   tag: 1.0.0
 canary:
   skipAnalysis: false
+resources:
+  limits:
+    cpu: 25m
+    memory: 50Mi
+  requests:
+    cpu: 25m
+    memory: 50Mi
+horizontalPodAutoscaler:
+  minReplicas: 2
+  maxReplicas: 8
+  resources:
+    cpu:
+      type: Utilization
+      averageUtilization: 50
+    memory:
+      type: Utilization
+      averageUtilization: 50

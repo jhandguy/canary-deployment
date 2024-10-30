@@ -1,3 +1,4 @@
+---
 metricsServer: http://prometheus-operated.prometheus.svc.cluster.local:9090
 serviceMonitor:
   enabled: true

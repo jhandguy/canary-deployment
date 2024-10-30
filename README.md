@@ -70,6 +70,9 @@ kind create cluster --image kindest/node:v1.31.0 --config=kind/cluster.yaml
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm install ingress-nginx/ingress-nginx --name-template ingress-nginx --create-namespace -n ingress-nginx --values kind/ingress-nginx-values.yaml --version 4.11.3 --wait
 
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server
+helm install metrics-server/metrics-server --name-template metrics-server --create-namespace -n metrics-server --values kind/metrics-server-values.yaml --version 3.12.2 --wait
+
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm install prometheus-community/kube-prometheus-stack --name-template prometheus --create-namespace -n prometheus --version 65.5.0 --wait
 

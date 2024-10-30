@@ -7,7 +7,7 @@ metadata:
   labels: &labels
     app: {{ .Release.Name }}
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.horizontalPodAutoscaler.minReplicas }}
   selector:
     matchLabels: *labels
   template:
@@ -46,3 +46,12 @@ spec:
             - name: metrics
               protocol: TCP
               containerPort: 9090
+          resources:
+            {{- with .Values.resources }}
+            requests:
+              memory: {{ .requests.memory }}
+              cpu: {{ .requests.cpu }}
+            limits:
+              memory: {{ .limits.memory }}
+              cpu: {{ .limits.cpu }}
+            {{- end }}

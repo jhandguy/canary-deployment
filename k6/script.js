@@ -39,17 +39,23 @@ export default function () {
         'node is kind-control-plane': (r) => r.json().node === 'kind-control-plane',
         'namespace is sample-app': (r) => r.json().namespace === 'sample-app',
         'pod is sample-app-*': (r) => r.json().pod.includes('sample-app-'),
-        'deployment is stable or canary': (r) => r.json().deployment === 'stable' || r.json().deployment === 'canary',
+        'deployment is stable or canary': (r) => ['stable', 'canary', 'sample-app-primary', 'sample-app'].includes(r.json().deployment),
     });
 
     switch (res.json().deployment) {
         case 'stable':
-            reqRate.add(true, { deployment: 'stable' });
-            reqRate.add(false, { deployment: 'canary' });
+        case 'sample-app-primary':
+            reqRate.add(true, {deployment: 'stable'});
+            reqRate.add(false, {deployment: 'canary'});
             break;
         case 'canary':
-            reqRate.add(false, { deployment: 'stable' });
-            reqRate.add(true, { deployment: 'canary' });
+        case 'sample-app':
+            reqRate.add(false, {deployment: 'stable'});
+            reqRate.add(true, {deployment: 'canary'});
+            break;
+        default:
+            reqRate.add(false, {deployment: 'stable'});
+            reqRate.add(false, {deployment: 'canary'});
             break;
     }
 }

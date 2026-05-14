@@ -62,6 +62,34 @@ kubectl argo rollouts set image sample-app sample-app=ghcr.io/jhandguy/canary-de
 kubectl argo rollouts promote sample-app -n sample-app
 ```
 
+### Using flagger
+
+```shell
+kind create cluster --image kindest/node:v1.35.0 --config=kind/cluster.yaml
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm install ingress-nginx/ingress-nginx --name-template ingress-nginx --create-namespace -n ingress-nginx --values kind/ingress-nginx-values.yaml --version 4.15.1 --wait
+
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server
+helm install metrics-server/metrics-server --name-template metrics-server --create-namespace -n metrics-server --values kind/metrics-server-values.yaml --version 3.13.0 --wait
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm install prometheus-community/kube-prometheus-stack --name-template prometheus --create-namespace -n prometheus --version 85.0.3 --wait
+
+helm repo add flagger https://flagger.app
+helm install flagger/flagger --name-template flagger --create-namespace -n flagger --values kind/flagger-values.yaml --version 1.43.0 --wait
+helm install flagger/loadtester --name-template flagger-loadtester -n flagger --version 0.37.0 --wait
+
+helm repo add flagger-k6-webhook https://grafana.github.io/flagger-k6-webhook
+helm install flagger-k6-webhook/k6-loadtester --name-template k6-loadtester -n flagger --values kind/k6-loadtester-values.yaml --version 1.5.2 --wait
+
+helm install sample-app/helm-charts/flagger --name-template sample-app --create-namespace -n sample-app --wait
+
+helm upgrade sample-app sample-app/helm-charts/flagger -n sample-app --reuse-values --set image.tag=latest --wait
+
+kubectl get canary sample-app -n sample-app -w
+```
+
 ## Smoke Testing
 
 ### Weighted canary

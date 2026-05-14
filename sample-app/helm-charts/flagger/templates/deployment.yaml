@@ -7,7 +7,6 @@ metadata:
   labels: &labels
     app: {{ .Release.Name }}
 spec:
-  replicas: {{ .Values.horizontalPodAutoscaler.minReplicas }}
   selector:
     matchLabels: *labels
   template:
